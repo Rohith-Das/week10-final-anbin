@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="/assets/css/adminLogin.css"> <!-- Ensure you have this CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- For icons -->
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <a class="text-decoration-none" href="/">
+                <h1 class="title">Roshow</h1>
+            </a>
+            <h3 class="subtitle">Admin Login</h3>
+            
+            <% if (typeof message !== 'undefined') { %>
+                <h4><%= message %></h4>
+            <% } %>
+    
+            <div id="error" class="text-warning fw-bold text-center"></div>
+            <form id="form" action="/admin" method="post">
+                <div class="form-group">
+                    <input type="text" name="email" class="form-control" placeholder="Enter email" id="email" required>
+                </div>
+                <div class="form-group position-relative">
+                    <input type="password" name="password" class="form-control" placeholder="Enter Password" id="password" required>
+                    <i class="fa fa-eye position-absolute top-50 end-0 translate-middle-y me-2 cursor-pointer" id="togglePassword"></i>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+    
+
+    <script>
+
+function validateForm() {
+            var form = document.getElementById('addCategoryForm');
+            var inputs = form.querySelectorAll('input[type="text"], textarea');
+            var isValid = true;
+            var pattern = /^[a-zA-Z0-9]+$/; // Alphanumeric characters only
+
+            inputs.forEach(function(input) {
+                // Remove previous error class
+                input.classList.remove('error');
+
+                // Trim value and check for multiple spaces
+                var value = input.value.trim();
+                if (value === "" || !pattern.test(value.replace(/\s+/g, ''))) {
+                    input.classList.add('error');
+                    isValid = false;
+                }
+            });
+
+            if (isValid) {
+                form.submit();
+            } else {
+                alert("Please fill in all the required fields with valid characters.");
+            }
+        }
+
+
+        // Toggle password visibility
+        document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('form');
+        const errorDiv = document.getElementById('error');
+        const messageDiv = document.getElementById('message');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+
+        if (messageDiv) {
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+
+       
+    });
+        
+    </script>
+    <style>
+      /* adminLogin.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.login-box {
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 40px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.title {
+    font-style: italic;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.fa-eye, .fa-eye-slash {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaa;
+}
+
+.fa-eye:hover, .fa-eye-slash:hover {
+    color: #333;
+}
+
+    </style>
+</body>
+</html>

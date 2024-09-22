@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Molla - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/assets/images/icons/site.html">
+    <link rel="mask-icon" href="/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="assets/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <link rel="stylesheet" href="/assets/css/plugins/jquery.countdown.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/skins/skin-demo-9.css">
+    <link rel="stylesheet" href="/assets/css/demos/demo-9.css">
+
+    <style>
+        .input-group-text {
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        .input-group-text i {
+            font-size: 1.3em;
+            color: #007bff; /* Change this color to your desired icon color */
+        }
+
+        .input-group-append {
+            border-left: none;
+        }
+
+        .input-group input {
+            border-right: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-box">
+            <div class="form-tab">
+                <ul class="nav nav-pills nav-fill" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="register-tab-2" data-toggle="tab" href="#register-2"
+                            role="tab" aria-controls="register-2" aria-selected="true">Register</a>
+                    </li>
+                </ul>
+
+                <div class="tab-pane fade show active" id="register-2" role="tabpanel"
+                    aria-labelledby="register-tab-2">
+                    <form action="/register" method="post" onsubmit="return validateForm()" name="registerForm">
+                        <div class="form-group">
+                            <label for="register-name">Name *</label>
+                            <input type="text" class="form-control" id="register-name" name="name" required>
+                            <p id="nameError" class="error-message text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-phone">Phone Number *</label>
+                            <input type="tel" class="form-control" id="register-phone" name="phone" required>
+                            <p id="phoneError" class="error-message text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email Address *</label>
+                            <input type="email" class="form-control" id="register-email" name="email" required>
+                            <p id="emailError" class="error-message text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Password *</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="register-password"
+                                    name="password" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="password-toggle"
+                                        title="Toggle password visibility">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <p id="passwordError" class="error-message text-danger"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password">Confirm Password *</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="register-confirm-password"
+                                    name="confirm-password" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="confirm-password-toggle">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <p id="confirm-passwordError" class="error-message text-danger"></p>
+                        </div>
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-outline-primary-2">
+                                <span>SIGN UP</span>
+                                <i class="icon-long-arrow-right"></i>
+                            </button>
+                            <label class="">Have an account <a href="/login">LOG IN</a></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plugins JS File -->
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/jquery.hoverIntent.min.js"></script>
+    <script src="/assets/js/jquery.waypoints.min.js"></script>
+    <script src="/assets/js/superfish.min.js"></script>
+    <script src="/assets/js/owl.carousel.min.js"></script>
+    <!-- Main JS File -->
+    <script src="/assets/js/main.js"></script>
+
+    <script>
+        function togglePasswordVisibility(inputId) {
+            const passwordInput = document.getElementById(inputId);
+            const icon = passwordInput.nextElementSibling.querySelector('i');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        document.getElementById('password-toggle').addEventListener('click', function () {
+            togglePasswordVisibility('register-password');
+        });
+
+        document.getElementById('confirm-password-toggle').addEventListener('click', function () {
+            togglePasswordVisibility('register-confirm-password');
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameInput = document.getElementById('register-name');
+            const phoneInput = document.getElementById('register-phone');
+            const emailInput = document.getElementById('register-email');
+            const passwordInput = document.getElementById('register-password');
+            const confirmPasswordInput = document.getElementById('register-confirm-password');
+
+            nameInput.addEventListener('blur', validateName);
+            phoneInput.addEventListener('blur', validatePhone);
+            emailInput.addEventListener('blur', validateEmail);
+            passwordInput.addEventListener('blur', validatePassword);
+            confirmPasswordInput.addEventListener('blur', validateConfirmPassword);
+
+            function validateName() {
+                const name = nameInput.value;
+                const nameError = document.getElementById('nameError');
+                const namePattern = /^[A-Za-z][A-Za-z\s]*$/;
+                if (!namePattern.test(name)) {
+                    nameError.textContent = 'Name must contain only letters and spaces, and not start with a space';
+                    return false;
+                } else {
+                    nameError.textContent = '';
+                    return true;
+                }
+            }
+
+            function validatePhone() {
+                const phone = phoneInput.value.trim();
+                const phoneError = document.getElementById('phoneError');
+                const phonePattern = /^[0-9]{10}$/; // Adjust pattern based on your requirements
+                if (!phonePattern.test(phone)) {
+                    phoneError.textContent = 'Invalid phone number';
+                    return false;
+                } else {
+                    phoneError.textContent = '';
+                    return true;
+                }
+            }
+
+            function validateEmail() {
+            const email = emailInput.value.trim();
+            const emailError = document.getElementById('emailError');
+             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+          if (!emailPattern.test(email)) {
+          emailError.textContent = 'Invalid email address';
+          return false;
+       } else {
+        emailError.textContent = '';
+        return true;
+      }
+        }
+
+
+           
+        function validatePassword() {
+    const passwordInput = document.getElementById('register-password');
+    const password = passwordInput.value.trim();
+    const passwordError = document.getElementById('passwordError');
+    
+   
+    const hasNumber = /\d/;
+    const hasLetter = /[a-zA-Z]/; 
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/; 
+    
+    if (password.length < 6) {
+        passwordError.textContent = 'Password must be at least 6 characters long';
+        return false;
+    } else if (!hasNumber.test(password)) {
+        passwordError.textContent = 'Password must contain at least one number';
+        return false;
+    } else if (!hasLetter.test(password)) {
+        passwordError.textContent = 'Password must contain at least one letter';
+        return false;
+    } else if (!hasSpecialChar.test(password)) {
+        passwordError.textContent = 'Password must contain at least one special character';
+        return false;
+    } else {
+        passwordError.textContent = '';
+        return true;
+    }
+}
+
+
+            function validateConfirmPassword() {
+                const confirmPassword = confirmPasswordInput.value.trim();
+                const confirmPasswordError = document.getElementById('confirm-passwordError');
+                if (confirmPassword !== passwordInput.value.trim()) {
+                    confirmPasswordError.textContent = 'Passwords do not match';
+                    return false;
+                } else {
+                    confirmPasswordError.textContent = '';
+                    return true;
+                }
+            }
+
+            function validateForm() {
+                const nameValid = validateName();
+                const phoneValid = validatePhone();
+                const emailValid = validateEmail();
+                const passwordValid = validatePassword();
+                const confirmPasswordValid = validateConfirmPassword();
+
+                return nameValid && phoneValid && emailValid && passwordValid && confirmPasswordValid;
+            }
+
+            document.querySelector('form').addEventListener('submit', function (e) {
+                if (!validateForm()) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

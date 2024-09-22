@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">Order Summary</h1>
+        
+        <p><strong>Order ID:</strong> <%= order.order_id %></p>
+        <p><strong>Order Date:</strong> <%= order.created_at.toDateString() %></p>
+        <p><strong>Payment Method:</strong> <%= order.payment_type %></p>
+    
+        <h3>Shipping Address</h3>
+        <p>
+            <%= order.address_id.fullName %><br>
+            <%= order.address_id.addressLine1 %>, <%= order.address_id.addressLine2 %>, <%= order.address_id.city %>, <%= order.address_id.state %>, <%= order.address_id.postalCode %>, <%= order.address_id.country %><br>
+            Phone: <%= order.address_id.phoneNumber %>
+        </p>
+        <% if (order.status !== 'Cancelled' && order.items.some(item => ['Delivered', 'Returned'].includes(item.status))) { %>
+            <a href="/downloadInvoice/<%= order._id %>" class="btn btn-primary mb-3">Download Invoice</a>
+        <% } %>
+    
+        <h3>Order Details</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% order.items.forEach(item => { %>
+                    <tr>
+                        <td><%= item.productName %></td>
+                        <td><%= item.quantity %></td>
+                        <td>₹<%= item.price.toFixed(2) %></td>
+                        <td><%= item.discount %>%</td>
+                        <td>₹<%= item.total.toFixed(2) %></td>
+                        <td><%= item.status %></td>
+                        <td>
+                            <% if (['Pending', 'Processing', 'Shipped'].includes(item.status)) { %>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal" data-itemid="<%= item._id %>">Cancel</button>
+                            <% } else if (item.status === 'Delivered') { %>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#returnModal" data-itemid="<%= item._id %>">Request Return</button>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    
+        <div class="row justify-content-end">
+            <div class="col-md-4">
+                <table class="table table-bordered">
+                    <tr>
+                        <td><strong>Subtotal:</strong></td>
+                        <td>₹<%= order.subtotal.toFixed(2) %></td>
+                    </tr>
+                    <% if (order.coupon_discount > 0) { %>
+                        <tr>
+                            <td><strong>Coupon Discount:</strong></td>
+                            <td>-₹<%= order.coupon_discount.toFixed(2) %></td>
+                        </tr>
+                    <% } %>
+                    <% if (order.wallet_amount_used > 0) { %>
+                        <tr>
+                            <td><strong>Wallet Amount Used:</strong></td>
+                            <td>-₹<%= order.wallet_amount_used.toFixed(2) %></td>
+                        </tr>
+                    <% } %>
+                    <tr>
+                        <td><strong>Grand Total:</strong></td>
+                        <td><h4>₹<%= order.total_amount.toFixed(2) %></h4></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cancel Modal -->
+    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelModalLabel">Cancel Order Item</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/cancelOrderItem" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" name="itemId" id="itemId">
+                        <div class="form-group">
+                            <label for="cancellationReason">Reason for Cancellation</label>
+                            <textarea class="form-control" id="cancellationReason" name="cancellationReason" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">Cancel Order Item</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Return Modal -->
+    <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="returnModalLabel">Request Return</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/requestReturn" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" name="itemId" id="returnItemId">
+                        <div class="form-group">
+                            <label for="returnReason">Reason for Return</label>
+                            <textarea class="form-control" id="returnReason" name="returnReason" rows="3" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-warning">Request Return</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function handleModal(event, modalId, inputId) {
+            var button = $(event.relatedTarget);  // Button that triggered the modal
+            var itemId = button.data('itemid');  // Extract info from data-* attributes
+            var modal = $(modalId);  // Select the modal
+            modal.find(inputId).val(itemId);  // Insert the itemId into the input field
+        }
+    
+        $('#cancelModal').on('show.bs.modal', function(event) {
+            handleModal(event, '#cancelModal', '#itemId');
+        });
+    
+        $('#returnModal').on('show.bs.modal', function(event) {
+            handleModal(event, '#returnModal', '#returnItemId');
+        });
+    </script>
+    
+    
+</body>
+</html>
